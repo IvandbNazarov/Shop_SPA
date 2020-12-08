@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="./css/registration.css">
+	<link rel="stylesheet" href="./css/bootstrap.css">
+	<link rel="stylesheet" href="./css/jquery.fancybox.min.css">
+</head>
+<body>
+
+	<div id="wrapper">
+		<div id="header"></div>
+		<div id="nav"></div>
+		<div id="main"></div>
+	</div>
+
+	<div id="modal"></div>
+
+
+
+
+
+<script id="headerTemplate" type="text/x-handlebars-template">
+
+	<h1 id="headerTitle">{{text}}</h1>
+
+</script>
+
+
+<script id="registrationTemplate" type="text/x-handlebars-template">
+	
+	{{#each buttons}}
+        <button type="{{this.type}}" class="{{this.class}}" id="{{this.id}}">{{this.text}}</button>
+      {{/each}}
+
+</script>
+
+
+<script id="mainMenu" type="text/x-handlebars-template">
+
+<li class="menuwrapper"><span class={{classSpan}}>{{nameUl}}</span>
+	<ul class="menu">
+		{{#each liItems}}
+			<li class={{this.className}}>{{this.name}}</li>
+		{{/each}}
+	</ul>
+</li>
+
+</script>
+
+
+
+
+<script id="inputForm" type="text/x-handlebars-template">
+
+    <form class={{formClass}} id={{formId}}>
+    	<h3>{{headText}}</h3>
+    	{{#each alert}}
+        <div class="alert alert-danger"
+        id ="{{id}}" role="alert">
+		{{text}}
+		</div>
+		{{/each}}
+
+		{{#each registrationData}}
+        	<div class="form-group">
+       			<label for={{this.for}}>{{this.text}}</label>
+        		<input type="{{this.type}}" class="{{this.class}}" id="{{this.id}}" placeholder="{{this.placeholder}}">
+        		<div class="invalid-feedback">{{this.errorMessage}}
+    			</div>
+        	</div>
+        {{/each}}
+
+      {{#each buttons}}
+        <button type="{{this.type}}" class="{{this.class}}" id="{{this.id}}">{{this.text}}</button>
+      {{/each}}
+    </form>
+    
+</script>
+
+
+<script id="productTemplate" type="text/x-handlebars-template">
+
+	{{#each this}}
+		<div class="productBlock">
+			<img src="http://localhost:3000/{{this.productImage}}" alt="">
+			<span>Наименование: <b>{{this.name}}</b></span>
+			<span>Цена: {{this.price}}</span>
+			<a href="#" data-id="{{this._id}}" class="change btn btn-info btn-lg" data-toggle="modal" data-target="#basicExampleModal">Изменить</a>
+			<a href="#" data-id="{{this._id}}" class="delete btn btn-danger btn-lg">Удалить</a>
+			<div class="form-group">
+				<a href="#" data-id="{{this._id}}" class="orderProduct btn btn-success btn-lg">Заказать</a>
+				№ <input type="number" class="quanityInput">
+				<div class="invalid-feedback">Должно быть целое число, больше 0
+    			</div>
+			</div>
+		</div>
+	{{/each}}
+
+</script>
+
+
+<script id="newProduct" type="text/x-handlebars-template">
+
+ 	<form class={{formClass}} id={{formId}}>
+	    <h3>{{headText}}</h3>
+	    {{#each newProductData}}
+     	    <div class="form-group">
+        		<label for={{this.for}}>{{this.text}}</label>
+          		<input type="{{this.type}}" class="{{this.class}}" id="{{this.id}}" placeholder="{{this.placeholder}}">
+          		<div class="invalid-feedback">{{this.errorMessage}}
+    			</div>
+        	</div>
+        {{/each}}
+
+        {{#each buttons}}
+        	<button type="{{this.type}}" class="{{this.class}}" id="{{this.id}}">{{this.text}}</button>
+        {{/each}}
+    </form>
+
+</script>
+
+
+<script id="editProduct" type="text/x-handlebars-template">
+
+	<form class="form-row" id="changeProduct">
+		<h2>ИЗМЕНЕНИЕ ПРОДУКТА</h2>
+		<label for="productName">Название</label>
+		<input class="editProductName form-control-lg" type="text" name="productName" placeholder="Введите название" value = {{name}}>
+		<label for="price">ЦЕНА</label>
+		<input class="editCount form-control-lg" type="number" name="price" placeholder="Укажите цену" value = {{price}}>
+		<label for="image">ВЫБРАТЬ ФОТО</label>
+		<input type="file"
+		class="form-control-lg" name="image" id="productImage" placeholder="Загрузите	фотографию" value = {{productImage}}>	
+		<button type="button" class="saveChanges btn-success btn-lg" data-id="{{_id}}">СОХРАНИТЬ</button>
+	</form>
+
+</script>
+
+
+<script id="ordersTemplate" type="text/x-handlebars-template">
+
+	<table class="table">
+		
+		<thead class="thead-inverse">
+			<tr>
+				<th>Наименование</th>
+				<th>Цена</th>
+				<th>Количетсво</th>
+				<th>Общая цена</th>
+				<th></th>
+			</tr>
+		</thead>
+
+		{{#each response}}
+		<tbody>
+			<td>{{this.product.name}}</td>
+			<td>{{this.product.price}}</td>
+			<td>{{this.quantity}}</td>
+			<td>{{this.totalprice}}</td>
+			<td><a href="#" data-id="{{this._id}}" class="deleteOrder btn">Удалить</a></td>
+		{{/each}}
+		</tbody>
+
+		<td></td>
+		<td></td>
+		<td>{{result.count}}</td>
+		<td>{{result.price}}</td>
+		<td></td>
+
+	</table>
+
+</script>
+
+
+
+	<script src="./js/jquery.js"></script>
+	<script src="./js/bootstrap.js"></script>
+	<script src="./js/handlebars.js"></script>
+	<script src="./js/jquery.fancybox.min.js"></script>
+	<script src="./js/template.js"></script>
+	<script src="./js/registration.js"></script>
+
+</body>
+</html>
+
+
+
+
+
+
+
